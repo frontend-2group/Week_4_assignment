@@ -65,11 +65,11 @@ function renderList(list) {
 // li.innerHTML = `
 // <li class="liclass">${list.content}</li>
 // `;
-
+/* 7/6
 function append() {
   const list = document.getElementById("#list");
   const form = document.getElementsByTagName("form");
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("click", (e) => {
     e.preventDefault();
     console.log(e);
     console.log(e.target.elements.content.value);
@@ -79,5 +79,53 @@ function append() {
   const append = document.createElement(".liclass");
   append.innerHTML = "append";
   list.append(append);
-}
+}*/
+
+const $sendbtn = document.querySelector("#send");
+const $listdata = document.querySelector("#list_data");
+// const $reset = document.querySelectorAll(".reset");
+const $list = document.querySelectorAll("#list");
+
+/*
+$send.addEventListener("click", () => {
+  if (!$listData.value.trim()) {
+    return alert("내용을 입력해주세요");
+  }
+});
+
+$form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (!$listData.value.trim()) {
+    return alert("내용을 입력해주세요");
+  }
+});
+
+$(document).ready(function () {
+  $("button[name='save']").click(function () {
+    $("body").append("click!!!<br/>");
+  });
+});
+*/
+$sendbtn.addEventListener("click", () => {
+  if (!$listdata.value.trim()) {
+    alert("내용을 입력해주세요");
+  }
+  // const $list = document.getElementById("#list");
+  const append = document.createElement("li");
+  append.setAttribute("data-role", "liclass");
+  append.innerHTML = `
+  <li class="liclass">
+  ${$listdata.value}</li>
+  `;
+
+  $list.appendChild(append);
+});
+
+// list(<ul>)의 마지막 자식 노드 뒤에 <li> 노드 추가
+
+//$("#list").append("<li>새로 추가된  아이템</li>");
+
+//$("body").append("<button name='add'>+</button>");
 //6.추가된 내용을 "각 각" 수정 및 삭제 수 있게 변경하시오.
+//아우.. 더럽게 추가 안되네 증ㅇ맬루!!!!!!
