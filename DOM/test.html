@@ -12,20 +12,22 @@
         알려주시오
       </p>
       <input type="text" id="te_input" maxlength="9" placeholder="글자만 입력하세요." />
-      <button class="input-btn">입력</button>
       <p>
-        5.아래의 입력창에 입력 후 저장 버튼을 누르거나 엔터키를 누르면 입력한 내용이 아래의 list에 추가 되도록 하시오. <br />초기화 버튼을
-        누르면 list안의 모든 내용이 지워져야 함
+        5.아래의 입력창에 입력 후 저장 버튼을 누르거나 엔터키를 누르면 입력한 내용이 아래의 list에 추가 되도록 하시오. 
+        <br />초기화 버튼을 누르면 list안의 모든 내용이 지워져야 함
       </p>
       <h5>6.추가된 내용을 "각 각" 수정 및 삭제 수 있게 변경하시오.</h5>
       <form id="form">
         <input type="text" value="" width="600" id="list_data" name="content" />
-        <button type="submit" id="send" value="show_view">저장</button>
+        <button type="submit" id="send" value="show_view"> 저장 </button>
         <button type="reset">초기화</button>
         <p>리스트</p>
         <ul id="list">
-          <li class="liclass">list</li>
-          <li class="liclass">list</li>
+          <li class="li-class">
+            list
+            <input type="button" class="edit-btn" value="수정"></input>
+            <input type="button" class="delete-btn" value="삭제"></input>
+          </li>
         </ul>
       </form>
     </div>
