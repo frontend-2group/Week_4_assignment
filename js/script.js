@@ -107,19 +107,21 @@ $(document).ready(function () {
   });
 });
 */
+
 $sendbtn.addEventListener("click", () => {
   if (!$listdata.value.trim()) {
     alert("내용을 입력해주세요");
   }
   // const $list = document.getElementById("#list");
-  const append = document.createElement("li");
-  append.setAttribute("data-role", "liclass");
-  append.innerHTML = `
-  <li class="liclass">
-  ${$listdata.value}</li>
-  `;
 
-  $list.appendChild(append);
+  // const append = document.createElement("li");
+  // append.setAttribute("data-role", "liclass");
+  // append.innerHTML = `
+  // <li class="liclass">
+  // ${$listdata.value}</li>
+  // `;
+
+  // $list.appendChild(append);
 });
 
 // list(<ul>)의 마지막 자식 노드 뒤에 <li> 노드 추가
@@ -127,5 +129,26 @@ $sendbtn.addEventListener("click", () => {
 //$("#list").append("<li>새로 추가된  아이템</li>");
 
 //$("body").append("<button name='add'>+</button>");
+//
+
+const postMock = [
+  {
+    id: 1,
+    content: "list1",
+  },
+  {
+    id: 2,
+    content: "list2",
+  },
+];
+function renderPost(post) {
+  const li = document.createElement("li");
+  li.classList = "liclass";
+  li.setAttribute("data-role", post.id);
+  li.addEventListener("click", getPostDetail);
+  li.innerHTML = `${post.content}`;
+  $list.appendChild(li);
+}
+const $postDetail = document.querySelector(".");
 //6.추가된 내용을 "각 각" 수정 및 삭제 수 있게 변경하시오.
 //아우.. 더럽게 추가 안되네 증ㅇ맬루!!!!!!
