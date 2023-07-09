@@ -6,22 +6,25 @@ console.log(RESERVATION_LIST);
 */
 
 const $button = document.querySelector('button')
-const userName = document.querySelectorAll('.userName')[0]
-const userPhone = document.querySelectorAll('.userPhone')[0]
-const reservationNumber = document.querySelector('#reservation-number')
+const $userName = document.querySelectorAll('.userName')[0]
+const $userPhone = document.querySelectorAll('.userPhone')[0]
+const $reservationNumber = document.querySelector('#reservation-number')
 
 $button.addEventListener('click', (e) => {
     e.preventDefault()
 
+    const userName = $userName.value
+    const userPhone = $userPhone.value
+
     // 예약 고객 찾기
     const reservation = RESERVATION_LIST.find(
-        (customer) => customer.name === userName.value && customer.phone === userPhone.value
+        (customer) => customer.name === userName && customer.phone === userPhone
     )
     //console.log(reservation)
     if (!reservation) {
         alert('일치하는 내역이 없습니다')
-        reservationNumber.innerText = '일치하는 내역이 없습니다'
+        $reservationNumber.innerText = '일치하는 내역이 없습니다'
     } else {
-        reservationNumber.innerText = `${reservation.number}`
+        $reservationNumber.innerText = `${reservation.number}`
     }
 });
