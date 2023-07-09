@@ -3,6 +3,25 @@ console.log(RESERVATION_LIST);
 
 /* 
 예약 고객확인하기
-
-
 */
+
+const $button = document.querySelector('button')
+const userName = document.querySelectorAll('.userName')[0]
+const userPhone = document.querySelectorAll('.userPhone')[0]
+const reservationNumber = document.querySelector('#reservation-number')
+
+$button.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    // 예약 고객 찾기
+    const reservation = RESERVATION_LIST.find(
+        (customer) => customer.name === userName.value && customer.phone === userPhone.value
+    )
+    //console.log(reservation)
+    if (!reservation) {
+        alert('일치하는 내역이 없습니다')
+        reservationNumber.innerText = '일치하는 내역이 없습니다'
+    } else {
+        reservationNumber.innerText = `${reservation.number}`
+    }
+});
