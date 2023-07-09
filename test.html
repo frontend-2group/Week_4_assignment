@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
-    <script defer src="./test.js"></script>
+    <script defer src="./test2.js"></script>
     <style>
       .content {
         width: 1024px;
@@ -49,13 +49,18 @@
       <form id="form">
         <input type="text" value="" width="600" id="list_data" name="content" />
         <button type="submit" id="send" value="show_view">저장</button>
-        <button type="reset">초기화</button>
+        <button type="reset" id="reset">초기화</button>
         <p>리스트</p>
         <ul id="list">
-          <li class="liclass">list</li>
-          <li class="liclass">list</li>
+          <!-- <li class="liclass">list</li>
+          <li class="liclass">list</li> -->
         </ul>
       </form>
+      <div>
+        <input type="text" value="" width="600" id="fixContent" />
+        <button id="fix">수정</button>
+        <button>삭제</button>
+      </div>
     </div>
   </body>
 </html>
