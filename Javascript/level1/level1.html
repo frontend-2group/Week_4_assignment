@@ -11,13 +11,15 @@
     <form id="account-send-form">
       <p>
         은행선택:
-        <select id="bank-selector"></select>
+        <select id="bank-selector">
+          <option value="0"> -- 은행을 선택해주세요 -- </option>
+        </select>
       </p>
       <p>
         계좌입력:
         <input id="account-input" maxlength="12" />
       </p>
-      <button>제출</button>
+      <button class="submit-button">제출</button>
     </form>
     <ul id="account-list">
       <li>성용은행 : 12-********-34</li>
