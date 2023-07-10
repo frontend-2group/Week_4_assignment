@@ -97,7 +97,12 @@ function editList(e){
     
     $list.replaceChild(edited, established);
     
+    // delete list
+    const $deleteBtn = document.querySelectorAll('.delete-btn');
     
+    $deleteBtn.forEach((evt) => {
+        evt.addEventListener('click', deleteList);
+    })
 }
 
 function deleteList(e){
