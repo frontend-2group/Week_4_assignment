@@ -3,13 +3,12 @@
 const $text = document.querySelector('#te_input')
 
 
-$text.addEventListener('keydown', (event)=>{
-    let key = event.keyCode;
-    if(key>=48 && key < 58){
+$text.addEventListener('input', (e)=>{
+    e.target.value = e.target.value.replace(/[0-9]/g, '')
     alert('숫자가 입력되었습니다')
-    $text.value=''
+    
     }
-})
+)
 
 // 5번 
 
