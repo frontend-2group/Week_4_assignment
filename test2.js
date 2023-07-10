@@ -30,7 +30,7 @@ const $list = document.querySelector("#list");
 
 function renderPost(post) {
     const li = document.createElement("li");
-    li.className = "list";
+    li.className = "listLi";
     li.setAttribute("date-role", post.id);
     li.innerHTML = `${post.content}`;
     $list.appendChild(li);
@@ -43,6 +43,8 @@ postMock.forEach((post) => {
     });
 });
 
+let idNum = postMock.length;
+
 //저장
 
 $form.addEventListener("submit", (e) => {
@@ -52,13 +54,13 @@ $form.addEventListener("submit", (e) => {
         return alert("내용을 입력해주세요");
     }
 
-    let idNum = postMock.length;
     const shotId = ++idNum;
 
     renderPost({
         id: shotId,
         content: $list_data.value,
     });
+
     postMock.push({
         id: shotId,
         content: $list_data.value,
@@ -66,3 +68,40 @@ $form.addEventListener("submit", (e) => {
 
     $list_data.value = "";
 });
+
+//초기화
+
+$reset.addEventListener("click", () => {
+    $list.innerHTML = "";
+    postMock = [];
+    idNum = [];
+});
+
+//수정
+
+const $fixContent = document.querySelector("#fixContent");
+const $fix = document.querySelector("#fix");
+const $del = document.querySelector("#del");
+
+function fixInput(post) {
+    const dateRole = post.target.getAttribute("date-role");
+    const findPost = postMock.find((post) => post.id == dateRole);
+    $fixContent.value = `${findPost.content}`;
+}
+
+$list.addEventListener("click", fixInput);
+$fix.addEventListener("click", () => {});
+
+$del.addEventListener("click", delPost);
+//삭제
+function delPost(postId) {
+    const $postItem = document.querySelector(`li[data-role="${postId}"]`);
+    const findIndex = postMock.findIndex(
+        (post) => post.id === parseInt(postId)
+    );
+    $postItem.remove();
+    postMock.splice(findIndex, 1);
+}
+
+//수정인풋부분까지만 값이 입력되고
+// 수정버튼 클릭시 작동안함....휴휴
