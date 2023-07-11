@@ -66,6 +66,7 @@ $form.addEventListener("submit", (e) => {
         content: $list_data.value,
     });
 
+    console.log(postMock);
     $list_data.value = "";
 });
 
@@ -87,21 +88,26 @@ function fixInput(post) {
     const dateRole = post.target.getAttribute("date-role");
     const findPost = postMock.find((post) => post.id == dateRole);
     $fixContent.value = `${findPost.content}`;
+
+    $fixContent.className = `data-role:${dateRole}`;
 }
+//input에 불러옴
 
 $list.addEventListener("click", fixInput);
 $fix.addEventListener("click", () => {});
 
-$del.addEventListener("click", delPost);
+console.log(postMock);
 //삭제
-function delPost(postId) {
-    const $postItem = document.querySelector(`li[data-role="${postId}"]`);
-    const findIndex = postMock.findIndex(
-        (post) => post.id === parseInt(postId)
-    );
-    $postItem.remove();
-    postMock.splice(findIndex, 1);
+function delPost(post) {
+    const $postItem = post.target.getAttribute("data-role");
+
+    console.log($postItem);
+    // const findIndex = postMock.findIndex((post) => post.id == $postItem);
+
+    // findIndex.remove();
+    // postMock.splice(findIndex, 1);
 }
 
-//수정인풋부분까지만 값이 입력되고
-// 수정버튼 클릭시 작동안함....휴휴
+$del.addEventListener("click", delPost);
+
+// 삭제 버튼을 클릭하면 인풋안에 데이터롤로 불러온 데이터가 사라짐
