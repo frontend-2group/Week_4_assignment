@@ -31,7 +31,7 @@ const $list = document.querySelector("#list");
 function renderPost(post) {
     const li = document.createElement("li");
     li.className = "listLi";
-    li.setAttribute("date-role", post.id);
+    li.setAttribute("data-role", post.id);
     li.innerHTML = `${post.content}`;
     $list.appendChild(li);
 }
@@ -66,7 +66,7 @@ $form.addEventListener("submit", (e) => {
         content: $list_data.value,
     });
 
-    console.log(postMock);
+    // console.log(postMock);
     $list_data.value = "";
 });
 
@@ -85,29 +85,61 @@ const $fix = document.querySelector("#fix");
 const $del = document.querySelector("#del");
 
 function fixInput(post) {
-    const dateRole = post.target.getAttribute("date-role");
-    const findPost = postMock.find((post) => post.id == dateRole);
+    const dataRole = post.target.getAttribute("data-role");
+    const findPost = postMock.find((post) => post.id == dataRole);
     $fixContent.value = `${findPost.content}`;
 
-    $fixContent.className = `data-role:${dateRole}`;
+    // $fixContent.className = "newPost";
+    // $fixContent.setAttribute("data-role", dataRole);
+    $fixContent.className = dataRole;
 }
+
 //input에 불러옴
 
 $list.addEventListener("click", fixInput);
 $fix.addEventListener("click", () => {});
 
-console.log(postMock);
+// let listShow = $list.childNodes;
+// console.log(listShow);
+
 //삭제
+// function delPost() {
+
+//     const $postItem = document.querySelector(".newPost");
+//     const newPost = $postItem.getAttribute("data-role");
+//     console.log(newPost);
+//     const find = postMock.find((post) => post.id == newPost);
+
+//     postMock.splice(find, 1);
+//     console.log(postMock);
+
+//     $list.removechild(find);
+// }
+
+// 삭제 버튼을 클릭하면 인풋안에 데이터롤로 불러온 데이터가 사라짐
+
+//-----대경님 코드--------
+
 function delPost(post) {
-    const $postItem = post.target.getAttribute("data-role");
+    const input =
+        post.target.previousSibling.previousSibling.previousSibling
+            .previousSibling;
 
-    console.log($postItem);
-    // const findIndex = postMock.findIndex((post) => post.id == $postItem);
+    const delId = postMock.findIndex((e) => {
+        return e.id == input.className;
+    });
+    postMock.splice(delId, 1);
 
-    // findIndex.remove();
-    // postMock.splice(findIndex, 1);
+    const arr = Object.values($list.childNodes);
+    //()객체내 values들을 배열로 변환
+    arr.splice(0, 3);
+    console.log(arr);
+
+    const result = arr.filter((e) => {
+        return e.getAttribute("data-role") == input.className;
+    });
+    const f = result[0];
+    $list.removeChild(f);
 }
 
 $del.addEventListener("click", delPost);
-
-// 삭제 버튼을 클릭하면 인풋안에 데이터롤로 불러온 데이터가 사라짐
