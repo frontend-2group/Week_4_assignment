@@ -31,15 +31,15 @@ const $list = document.querySelector("#list");
 function renderPost(post) {
     const li = document.createElement("li");
     li.className = "listLi";
-    li.setAttribute("data-role", post.id);
-    li.innerHTML = `${post.content}`;
+    li.setAttribute("data-role", post.name);
+    li.innerHTML = `${post.ct}`;
     $list.appendChild(li);
 }
 
-postMock.forEach((post) => {
+postMock.forEach((a) => {
     renderPost({
-        id: post.id,
-        content: post.content,
+        name: a.id,
+        ct: a.content,
     });
 });
 
