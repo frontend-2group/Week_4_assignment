@@ -72,11 +72,13 @@ $form.addEventListener("submit", (e) => {
 //초기화
 $form.addEventListener("reset", (e) => {
   $list.innerHTML = "";
-  // shortName = [];
+  shortName = [];
+  postMock = [];
   //빈배열을 넣어야 데이터롤이 초기화가 같이 됨
 });
 
-//수정
+//6번
+
 const $detail = document.querySelector("#detail");
 const $change = document.querySelector("#change");
 const $delete = document.querySelector("#delete");
@@ -89,11 +91,15 @@ function getDetail(e) {
   const postId = e.target.getAttribute("data-role");
   //target 을 써야 li만 가지고 옴
   console.log(postId);
-  const post = postMock.find((post) => post.id === parseInt(postId));
+  const post = postMock.find((post) => post.id === postId);
   $text_data.value = `${post.content}`;
+  // 여기부터 오류
+  $text_data.className = postId;
 } // 여기까지 인풋태그로 끌고 오기
 
+// $change.addEventListener("click");
 //수정 splice
+/*
 $change.addEventListener("click", (e) => {
   const newul = document.createElement("li");
   const newtext = document.createTextNode("test");
@@ -107,3 +113,42 @@ $change.addEventListener("click", (e) => {
   const replaceNode = parentnode.replaceChild(newul, oldtnode);
   // document.write(oldtnode.innerHTML);
 });
+*/
+
+// 삭제
+
+function deletebtn(e) {
+  //
+
+  const input =
+    post.target.previousSibling.previousSibling.previousSibling.previousSibling;
+
+  const delid = postMock.findIndex((e) => {
+    return e.id == input.className;
+  });
+  postMock.splice(delid, 1);
+
+  const arr = Object.values($list.childNodes);
+  arr.splice(0, 3);
+  const result = arr.filter((e) => {
+    return e.getAttribute("data-role") == input.className;
+  });
+  const f = result[0];
+  console.log(f);
+  $list.removeChild(f);
+}
+//
+// const postId = e.target.getAttribute("data-role");
+// console.log(postId);
+// const post = postMock.find((post) => post.id === parseInt(postId));
+// console.log(post);
+// const cn = $list.childNodes;
+// console.log(cn);
+// const oldList = e.parentNode;
+
+// $list.remove(oldList);
+// $list.removeChild(cn);
+// shortName = [];
+// postMock = [];
+
+$delete.addEventListener("click", deletebtn);
