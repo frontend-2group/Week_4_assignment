@@ -4,40 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS03 | 레시피 재료 추가하기</title>
+    <link rel="stylesheet" href="level3.css">
     <script defer type="module" src="./level3.js"></script>
-    <title>Document</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        border: 1px solid #999;
-      }
-
-      table th,
-      td {
-        text-align: center;
-        border: 1px solid #999;
-      }
-
-      table .thead > th {
-        width: 150px;
-        padding: 16px;
-      }
-    </style>
   </head>
   <body>
     <form id="ingredient-form">
-      <p>재료명: <input name="ingredient" /></p>
-      <p>용량: <input name="weight" /></p>
-      <button>추가</button>
+      <p>재료명: <input id="ingredient" name="ingredient" /></p>
+      <p>용량: <input id="weight" name="weight" /></p>
+      <button id="add-list">추가</button>
     </form>
-    <table>
+    <table id="list">
       <tr class="thead">
         <th>재료</th>
         <th>무게</th>
         <th>관리</th>
       </tr>
+      <tr class="tbody">
+        <!-- ingredient / weight -->
+      </tr>
     </table>
-    <button id="submit_button" type="button">제출</button>
-    <ul id="ingredient-list"></ul>
+    <button id="submit-button" type="button">제출</button>
+    <ul id="ingredient-list">
+      <!-- { ingredient: weight } -->
+    </ul>
   </body>
 </html>
