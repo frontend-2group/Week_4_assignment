@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
-    <script defer src="./js/testdom.js"></script>
+    <script defer src="./js/testdom2.js"></script>
     <style>
       .content {
         width: 1024px;
@@ -43,10 +43,9 @@
       type="text"
       id="te_input"
       maxlength="10"
-      onkeydown="checkNumber(event)"
       placeholder="글자만 입력하세요."
     />
-
+    <!-- onkeydown="checkNumber(event)" -->
     <!-- <p id="word"></p> -->
     <!-- pattern="[0~9]+ -->
 
@@ -61,10 +60,12 @@
       <button type="submit" id="send" value="show_view">저장</button>
       <button class="reset-btn" type="reset">초기화</button>
       <p>리스트</p>
-      <ul id="list">
-        <li class="liclass">list</li>
-        <li class="liclass">list</li>
-      </ul>
+      <ul id="list"></ul>
     </form>
+    <div id="list-detail">
+      <input type="text" width="600" id="fix-list" name="fixcontent" />
+      <button id="change">수정</button>
+      <button id="delete">삭제</button>
+    </div>
   </body>
 </html>
