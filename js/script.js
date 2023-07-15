@@ -72,7 +72,7 @@ $form.addEventListener("submit", (e) => {
 //초기화
 $form.addEventListener("reset", (e) => {
   $list.innerHTML = "";
-  shortName = [];
+  // shortName = [];
   postMock = [];
   //빈배열을 넣어야 데이터롤이 초기화가 같이 됨
 });
@@ -80,44 +80,72 @@ $form.addEventListener("reset", (e) => {
 //6번
 
 const $detail = document.querySelector("#detail");
-const $change = document.querySelector("#change");
-const $delete = document.querySelector("#delete");
 const $text_data = document.querySelector("#text_data");
-
-// const items = ul.getElementsByTagName('li');
 
 function getDetail(e) {
   // console.log(e.currentTarget);
   const postId = e.target.getAttribute("data-role");
   //target 을 써야 li만 가지고 옴
   console.log(postId);
-  const post = postMock.find((post) => post.id === postId);
+
+  const post = postMock.find((post) => post.id == postId);
   $text_data.value = `${post.content}`;
-  // 여기부터 오류
   $text_data.className = postId;
 } // 여기까지 인풋태그로 끌고 오기
 
 // $change.addEventListener("click");
+$list.addEventListener("click", getDetail);
+
+const $change = document.querySelector("#change");
+const $delete = document.querySelector("#delete");
+
 //수정 splice
-/*
-$change.addEventListener("click", (e) => {
-  const newul = document.createElement("li");
-  const newtext = document.createTextNode("test");
-  // newul.innerText = `${post.content.value}`;
-  newul.appendChild(newtext);
 
-  const parentnode = document.getElementById("#list");
-  // parentnode.replaceChild(newul, oldtnode.innerHTML);
+//1. 접근
+//2. 수정버튼을 누르면 데이터 변경
+function changebtn(e) {
+  const input = e.target.previousSibling.previousSibling;
 
-  // const oldtnode = document.getElementsByClassName("liclass");
-  const replaceNode = parentnode.replaceChild(newul, oldtnode);
-  // document.write(oldtnode.innerHTML);
-});
-*/
+  // 여기 꼭 있어야하나..?
+  // const delid = postMock.findIndex((e) => {
+  //   return e.id == input.className;
+  // });
+  // postMock.splice(delid, 1);
+
+  const arr = Object.values($list.childNodes);
+  arr.splice(0, 3);
+  console.log(arr);
+
+  const result = arr.filter((e) => {
+    return e.getAttribute("data-role") == input.className;
+    //형변환 때문에 === 는 안된다!
+  });
+  // console.log(result);
+  // const newIdnum = ++shortName;
+  const oldList = result[0];
+
+  const newList = document.createElement("li");
+  // newList.setAttribute("data-role", e.id);
+  newList.innerHTML = `${input.value}`;
+  newList.className = "liclass";
+  newList.setAttribute("data-role", input.className);
+  $list.replaceChild(newList, oldList);
+  $text_data.value = "";
+
+  // postMock 수정
+  const updateId = postMock.find((e) => {
+    return e.id == input.className;
+  });
+  updateId.content = `${input.value}`;
+}
+
+//재수정과 삭제가 안된다.
+
+$change.addEventListener("click", changebtn);
 
 // 삭제
 
-function deletebtn(e) {
+function deletebtn(post) {
   //
 
   const input =
@@ -130,25 +158,15 @@ function deletebtn(e) {
 
   const arr = Object.values($list.childNodes);
   arr.splice(0, 3);
+  console.log(arr);
+
   const result = arr.filter((e) => {
     return e.getAttribute("data-role") == input.className;
+    //형변환 때문에 === 는 안된다!
   });
   const f = result[0];
   console.log(f);
   $list.removeChild(f);
+  $text_data.value = "";
 }
-//
-// const postId = e.target.getAttribute("data-role");
-// console.log(postId);
-// const post = postMock.find((post) => post.id === parseInt(postId));
-// console.log(post);
-// const cn = $list.childNodes;
-// console.log(cn);
-// const oldList = e.parentNode;
-
-// $list.remove(oldList);
-// $list.removeChild(cn);
-// shortName = [];
-// postMock = [];
-
 $delete.addEventListener("click", deletebtn);
