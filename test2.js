@@ -57,8 +57,8 @@ $form.addEventListener("submit", (e) => {
     const shotId = ++idNum;
 
     renderPost({
-        id: shotId,
-        content: $list_data.value,
+        name: shotId,
+        ct: $list_data.value,
     });
 
     postMock.push({
@@ -84,20 +84,17 @@ const $fixContent = document.querySelector("#fixContent");
 const $fix = document.querySelector("#fix");
 const $del = document.querySelector("#del");
 
-function fixInput(post) {
-    const dataRole = post.target.getAttribute("data-role");
+function fixInput(e) {
+    const dataRole = e.target.getAttribute("data-role");
     const findPost = postMock.find((post) => post.id == dataRole);
     $fixContent.value = `${findPost.content}`;
 
-    // $fixContent.className = "newPost";
-    // $fixContent.setAttribute("data-role", dataRole);
     $fixContent.className = dataRole;
 }
 
 //input에 불러옴
 
 $list.addEventListener("click", fixInput);
-$fix.addEventListener("click", () => {});
 
 // let listShow = $list.childNodes;
 // console.log(listShow);
@@ -120,6 +117,7 @@ $fix.addEventListener("click", () => {});
 
 //-----대경님 코드--------
 
+// 삭제
 function delPost(post) {
     const input =
         post.target.previousSibling.previousSibling.previousSibling
@@ -143,3 +141,37 @@ function delPost(post) {
 }
 
 $del.addEventListener("click", delPost);
+
+//수정
+
+function fixPost(post) {
+    const input = post.target.previousSibling.previousSibling;
+    // console.log(input);
+    //input창 소환
+
+    const arrFix = Object.values($list.childNodes);
+    arrFix.splice(0, 3);
+    // console.log(arrFix);
+
+    const result = arrFix.filter((post) => {
+        return post.getAttribute("data-role") == input.className;
+    });
+    // console.log(result);
+
+    const changeLi = document.createElement("li");
+    changeLi.innerHTML = `${input.value}`;
+    changeLi.className = "listLi";
+    changeLi.setAttribute("data-role", input.className);
+
+    $list.replaceChild(changeLi, result[0]);
+
+    //mock수정
+
+    const fix = postMock.find((e) => {
+        return e.id == input.className;
+    });
+
+    fix.content = `${input.value}`;
+}
+
+$fix.addEventListener("click", fixPost);
