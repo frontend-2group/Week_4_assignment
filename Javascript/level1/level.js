@@ -45,16 +45,17 @@ $submitBtn.addEventListener('click', (e) => {
     e.preventDefault();
     
     let bankId = $bankSelector.value;
-    let bankName = bankList[bankId];
+    let accountFormat = ACCOUNT_FORM[bankId];
     let accountNumber = $accountInput.value;
     
     // 입력 받은 숫자가 12자리인지 확인
     if (accountNumber.length < 12){
         alert('계좌번호는 모두 12자리 입니다.');
-        accountNumber = '';
+        // accountNumber = '';
+        return
     }
     
-    for(let [bankIdx, secureFormat] of Object.entries(ACCOUNT_FORM)){        
+    for(let [bankId, secureFormat] of Object.entries(ACCOUNT_FORM)){        
         // 가운데 번호 *로 변경하기
         function replaceToAsterisk() {
             let parts = secureFormat.split("-");
@@ -65,17 +66,20 @@ $submitBtn.addEventListener('click', (e) => {
               }
             }
             return parts.join("-");
-
         }
         let securedNum =  replaceToAsterisk(accountNumber);  
         
-        
+        // 0으로 되어 있는 숫자 > 입력받은 값으로 대체
+        for(let i = 0; i < accountNumber.length; i++){
+            securedNum = securedNum.replace('0', accountNumber[i])
+        }
         
         // 03. 제출 버튼 클릭 -> $accountList에 계좌 정보 등록
+        const bankName = BANK_LIST[bankId];
         const li = document.createElement('li');
-
+        
         li.innerHTML = ` <li> ${bankName}: ${securedNum} </li> `;
         $accountList.appendChild(li);
-        accountNumber = '';
+        $accountInput.value = '';
     }
 });

@@ -107,7 +107,6 @@ function editList(e){
 
 function deleteList(e){
     const deleteThis = e.currentTarget.parentNode.parentNode;
-
     $list.removeChild(deleteThis);
 }
 
