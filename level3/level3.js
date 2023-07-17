@@ -25,7 +25,8 @@ const $weight = document.getElementsByTagName("input")[1];
 const $thead = document.querySelector(".thead");
 const $table = document.getElementsByTagName("table")[0];
 const $deleteBtn = document.querySelector(".deleteBtn");
-
+const $submitbutton = document.querySelector("#submit_button");
+const $ingredientList = document.querySelector("#ingredient-list");
 let orderdata = [
   // {
   // id: "",
@@ -44,17 +45,14 @@ function renderboard(e) {
     `;
   $table.appendChild(tr);
 
-  // tr.className = "data-role";
-  // <td><button class="deleteBtn">삭제</button></td>
-
   const td = document.createElement("td");
   const button = document.createElement("button");
   button.className = "deleteBtn";
   button.innerText = "삭제";
-  td.appendChild(button);
-  tr.appendChild(td);
+  td.append(button);
+  tr.append(td);
 
-  button.addEventListener("click", deleteclick);
+  button.addEventListener("click", deleteClick);
 
   // $deleteBtn.addEventListener("click", deleteclick);
 }
@@ -73,17 +71,26 @@ let shordId = orderdata.length;
 
 $addBtn.addEventListener("click", (e) => {
   e.preventDefault();
+
+  //중복 품목 제거
+  const result = orderdata.filter((i) => {
+    return i.ingredient == $ingredient.value;
+  });
   if (!$ingredient.value.trim() && !$weight.value.trim()) {
     return alert("빈 칸을 채워주세요");
   }
-  if (!$ingredient.value.trim()) {
+
+  //--------------
+  else if (!$ingredient.value.trim()) {
     return alert("재료를 입력해주세요요");
     // 재료의 빈칸의 공백을 제거했을 때 값이 있는게 = true
     // 재료의 빈칸의 공백을 제거했을 때 값이 없는게 = false 그래서 앞에 !를 붙임
   } else if (!$weight.value.trim()) {
     return alert("용량을 입력해주세요");
   }
-
+  if (result.length > 0) {
+    return alert("이미있어");
+  }
   const idNumber = ++shordId;
   renderboard({
     id: idNumber,
@@ -95,42 +102,39 @@ $addBtn.addEventListener("click", (e) => {
     ingredient: $ingredient.value,
     weight: $weight.value,
   });
-  //   const sameingredient = orderdata.find((e)=>e.ingredient ==)
-  //   if ($ingredient.value == orderdata.ingredient) {
-  //     return "동일 상품이 이미 추가되어있습니다";
-  //   }
 
-  //   console.log(orderdata.ingredient);
   $ingredient.value = "";
   $weight.value = "";
 });
 
-// 구분할 수 있는 값, 랜덤 아이디
-// id로 filter -> 제거된 배열
-// 제거된 배열을 다시 화면에 그려줌
-// rowRender 함수화
+// 삭제함수
 
-function deleteclick(e) {
-  console.log("삭제");
-  // $td.className = e.id;
-  // e.preventDefault();
-  // const $td = e.currentTarget.parentNode.parentNode;
-  // // console.log($td);
-  // console.log($td.className);
+function deleteClick(e) {
+  //노드 삭제하기
+  const deleteNode = e.currentTarget.parentNode.parentNode;
+  $table.removeChild(deleteNode);
 
-  // const delId = orderdata.filter((e) => {
-  //   return e.id == $td.className;
-  // });
-  // orderdata.splice(delId);
+  // 삭제된 노드와 같은 값의 객체 orderdata에서 지우기
+  const deleteId = deleteNode.getAttribute("data-role");
+  const deleteOrderData = orderdata.findIndex((e) => {
+    return e.id == deleteId;
+  });
+  orderdata.splice(deleteOrderData, 1);
 
-  // const arr = Object.values($table.childNodes);
-  // console.log(arr);
-  // arr.splice(0, 2);
-
-  // const result = arr.filter((e) => {
-  //   return e.getAttribute("data-role") == $td.className;
-  // });
-
-  // const f = result[0];
-  // $table.removeChild(f);
+  console.log(orderdata);
 }
+
+//제출
+function submitButtonClick(e) {
+  $ingredientList.innerHTML = "";
+  orderdata.forEach((post) => {
+    const $li = document.createElement("li");
+    $li.innerText = `${post.ingredient} : ${post.weight}`;
+    $ingredientList.append($li);
+    // $ingredientList.removeChild($li);
+  });
+}
+
+$submitbutton.addEventListener("click", submitButtonClick);
+
+// console.log(orderdata);
