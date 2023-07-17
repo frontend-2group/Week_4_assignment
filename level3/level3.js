@@ -76,12 +76,11 @@ $addBtn.addEventListener("click", (e) => {
   const result = orderdata.filter((i) => {
     return i.ingredient == $ingredient.value;
   });
-  if (!$ingredient.value.trim() && !$weight.value.trim()) {
-    return alert("빈 칸을 채워주세요");
-  }
 
   //--------------
-  else if (!$ingredient.value.trim()) {
+  if (!$ingredient.value.trim() && !$weight.value.trim()) {
+    return alert("빈 칸을 채워주세요");
+  } else if (!$ingredient.value.trim()) {
     return alert("재료를 입력해주세요요");
     // 재료의 빈칸의 공백을 제거했을 때 값이 있는게 = true
     // 재료의 빈칸의 공백을 제거했을 때 값이 없는게 = false 그래서 앞에 !를 붙임
@@ -131,10 +130,7 @@ function submitButtonClick(e) {
     const $li = document.createElement("li");
     $li.innerText = `${post.ingredient} : ${post.weight}`;
     $ingredientList.append($li);
-    // $ingredientList.removeChild($li);
   });
 }
 
 $submitbutton.addEventListener("click", submitButtonClick);
-
-// console.log(orderdata);
