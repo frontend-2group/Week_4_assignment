@@ -18,10 +18,10 @@ function renderPost(e) {
   const tr = document.createElement("tr");
   tr.className = "thead";
   tr.setAttribute("data-role", e.id);
-  // tr.addEventListener("click",)
+  // tr.addEventListener("click", detail);
   tr.innerHTML = ` 
     <td>${e.ingredient}</td>
-    <td>${e.weight}</td>
+    <td>${e.weight}G</td>
   `;
   $table.appendChild(tr);
 
@@ -58,7 +58,18 @@ $btn.addEventListener("click", addbtnclick);
 // 추가하기 -> tr 만들고 tr 안에 td로 innnerHTML 만들기
 function addbtnclick(e) {
   e.preventDefault();
+
+  const filter = postMock.filter(
+    (post) => post.ingredient === $ingredient.value
+  );
   //로드되는걸 막는다
+  if (filter.length > 0) {
+    alert("이미 존재하는 재료입니다");
+    $ingredient.value = ``;
+    $weight.value = ``;
+    return;
+  }
+
   if (!$ingredient.value.trim() || !$weight.value.trim()) {
     return alert("내용을 입력해주세요");
     //return을 넣어야 리스트 안생김~
@@ -88,13 +99,35 @@ function addbtnclick(e) {
 
 function postdelete(e) {
   const delId = e.currentTarget.parentNode.parentNode;
-  // console.log(postId);
+  const delData = delId.getAttribute("data-role");
+
+  const delMock = postMock.findIndex((e) => {
+    return e.id == delData;
+  });
+  postMock.splice(delMock, 1);
   $table.removeChild(delId);
+
+  // console.log(postId);
+  // $table.removeChild(delId);
+  // console.log(postMock);
 }
 
 //제출 ul 푸시
 const $submit = document.querySelector("#submit_button");
+const $ullist = document.querySelector("#ingredient-list");
 
-function detail(e) {}
+// function detail(post) {}
 
-$submit.addEventListener("click", detail);
+$submit.addEventListener("click", () => {
+  // const delId = post.currentTarget.previousSibling.previousSibling;
+  // console.log(delId);
+  $ullist.innerHTML = "";
+  postMock.forEach((post) => {
+    const li = document.createElement("li");
+    console.log(li);
+    li.innerText = `${post.ingredient} : ${post.weight}G`;
+    li.className = "liclass";
+    $ullist.appendChild(li);
+    //
+  });
+});
