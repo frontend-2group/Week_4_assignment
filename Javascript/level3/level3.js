@@ -15,6 +15,8 @@ const $btn = document.getElementsByTagName("button")[0];
 const $table = document.getElementsByTagName("table")[0];
 const $thead = document.querySelector(".thead");
 
+const $submit_button = document.querySelector("#submit_button");
+const $ingredientList = document.querySelector("#ingredient-list");
 // mock 생성
 
 let mock = [];
@@ -70,13 +72,23 @@ function PostPush(e) {
     e.preventDefault();
 
     if (!$ingredient.value.trim() || !$weight.value.trim()) {
-        return alert("내용을 입력하세요");
+        return alert("빈칸을 입력하세요");
     }
 
-    if (/\D/.test($weight.value)) {
-        $weight.value = "";
-        return alert("용량에 숫자만 입력하세요");
+    const findIng = mock.filter((post) => {
+        return post.ingredient == $ingredient.value;
+    });
+
+    console.log(findIng);
+
+    if (findIng.length > 0) {
+        return alert("이미 추가된 재료입니다");
     }
+
+    // if (/\D/.test($weight.value)) {
+    //     $weight.value = "";
+    //     return alert("용량에 숫자,g,ea로 입력하세요");
+    // }
 
     let idNum = ++idList;
 
@@ -104,7 +116,31 @@ $btn.addEventListener("click", PostPush);
 
 function delPost(e) {
     const delList = e.currentTarget.parentNode;
-    console.log(delList);
+    const delData = delList.getAttribute("data-role");
 
+    const delMock = mock.findIndex((e) => {
+        return e.id == delData;
+    });
+
+    mock.splice(delMock, 1);
     $table.removeChild(delList);
 }
+
+//제출버튼으로 list추가
+
+$submit_button.addEventListener("click", () => {
+    // const mockValue = Object.assign({}, mock);
+    // console.log(mockValue.["ingredient"]);
+    // const value = Object.values(mockValue);
+    // console.log(value);
+
+    $ingredientList.innerHTML = "";
+
+    mock.forEach((post) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+    <li>${post.ingredient} : ${post.weight}</li>`;
+
+        $ingredientList.appendChild(li);
+    });
+});
