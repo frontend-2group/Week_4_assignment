@@ -12,20 +12,21 @@
 const $ingredient = document.querySelector('#ingredient');
 const $weight = document.querySelector('#weight');
 const $list = document.querySelector('#list');
+const $table = document.getElementsByTagName("table")[0];
 const $tbody = document.querySelector('.tbody');
 
 const ingredientArr = [];
-
+let countId = ingredientArr.length;
 
 // function addList
 function addList(){
     const deleteBtn = document.querySelectorAll('.delete-button');
-    const td = document.createElement('td')
+    const tr = document.createElement('tr')
 
-    $tbody.innerHTML = `
+    tr.innerHTML = `
         <td>${$ingredient.value}</td>
         <td>${$weight.value}</td>
-        <button class="delete-button">삭제</button>
+        <td><button class="delete-button">삭제</button></td>
     `;
 
     // delete btn
@@ -33,7 +34,7 @@ function addList(){
         btn.addEventListener('click', deleteList);
     })
 
-    $tbody.appendChild(td);
+    $table.appendChild(tr);
 }
 
 
@@ -54,12 +55,16 @@ $addListBtn.addEventListener('click', (e) => {
     }
 
     // add ListMock
+    const shortId = ++countId;
+
     addList({
+        id: shortId,
         ingredient: $ingredient.value,
         weight: $weight.value
     })
 
     ingredientArr.push({
+        id: shortId,
         ingredient: $ingredient.value,
         weight: $weight.value
     });
@@ -73,8 +78,19 @@ $addListBtn.addEventListener('click', (e) => {
 
 
 // delete 
-function deleteList(){
-    
+function deleteList(e){
+    //노드 삭제하기
+  const deleteNode = e.currentTarget.parentNode.parentNode;
+  $table.removeChild(deleteNode);
+
+  // 삭제된 노드와 같은 값의 객체 orderdata에서 지우기
+  const deleteId = deleteNode.getAttribute("shortId");
+  const deleteData = ingredientArr.findIndex((e) => {
+    return e.id == deleteId;
+  });
+  ingredientArr.splice(deleteData, 1);
+
+  console.log(ingredientArr);
 }
 
 
